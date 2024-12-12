@@ -7,8 +7,6 @@ The previewed media can be `seek bw|fw` & `zoom in|out` by setting the key.
 预览多媒体文件基于`mpv`在特定环境(`sway`+`tmux`)。  
 需要手动开启不会自动启动。预览文件可以快进快退和放大缩小。  
 
-![screenshot](screenshot/00.png)  
-
 ----  
 
 ### 📦 Installation 安装  
@@ -35,7 +33,8 @@ ya pack -a ovwxxwvo/mpviewer.yazi
 
 Clone the repo to your yazi config dir :  
 ```sh  
-git clone https://github.com/ovwxxwvo/mpviewer.yazi.git ~/.config/yazi/plugins/  
+cd ~/.config/yazi/plugins/  
+git clone https://github.com/ovwxxwvo/mpviewer.yazi.git  
 ```  
 
 ----  
@@ -46,7 +45,6 @@ Add this line to your `sway` config file `~/.config/sway/config` :
 ```config  
 # set `mpv` window that title contain "mpv-pts" to floating mode & hide in scratchpad  
 set $appid mpviewer  
-
 for_window [app_id="$appid"] floating enable  
 for_window [app_id="$appid"] move scratchpad  
 ```  
