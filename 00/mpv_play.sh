@@ -40,28 +40,23 @@ get_file() {
 
 get_rect() {
   tmux_pid=$(tmux display-message -p '#{client_pid}')
-  wins_pid=$(swaymsg -t get_tree |jq -j '.. | select(.type?) | select(.focused) | .pid')
-
-  cell_w=$(tmux display-message -p '#{window_cell_width}' )
-  cell_h=$(tmux display-message -p '#{window_cell_height}')
+  # wins_pid=$(ps -ef |grep -v "grep" |grep "$tmux_pid" |awk '{print $3}' )
+  wins_pid=$( swaymsg -t get_tree |jq -j '.. | select(.type?) | select(.focused) | .pid' )
   scale=$(swaymsg -t get_outputs |jq -r '.[] | select(.focused) | .scale')
   win_x=$(swaymsg -t get_tree |jq -j '.. | select(.type?) | select(.focused).rect | .x')
   win_y=$(swaymsg -t get_tree |jq -j '.. | select(.type?) | select(.focused).rect | .y')
-
-  # echo $x $y $w $h
-  x=$(echo "$win_x+($x+0.4)*$cell_w/$scale" |bc)
-  y=$(echo "$win_y+($y+0.2)*$cell_h/$scale" |bc)
-  w=$(echo "       ($w+0.2)*$cell_w/1"      |bc)
-  h=$(echo "       ($h-0.4)*$cell_h/1"      |bc)
-  # echo $x $y $w $h
+  x=$(echo "$win_x+$x/$scale" |bc)
+  y=$(echo "$win_y+$y/$scale" |bc)
 
   app_w=$(echo "$w" |bc)
   app_h=$(echo "$h" |bc)
-  med_w=$( exiftool "$preview_file" \
+  med_w=$( \
+    exiftool "$preview_file" \
     |grep -Ei '^[[:space:]]*Image Width' \
     |grep -Eo '[0-9]*' \
     )
-  med_h=$( exiftool "$preview_file" \
+  med_h=$( \
+    exiftool "$preview_file" \
     |grep -Ei '^[[:space:]]*Image Height' \
     |grep -Eo '[0-9]*' \
     )

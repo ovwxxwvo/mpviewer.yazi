@@ -48,6 +48,7 @@ start_server() {
     --input-ipc-server="$server_file" \
     --title="$window_title" \
     --wayland-app-id="mpviewer"\
+    --scale=lanczos \
     --idle=yes \
     --keep-open=yes \
     --focus-on=never \
