@@ -1,4 +1,6 @@
+--- @since 26.1.10
 --- @sync entry
+
 
 local mpserver = '~/.config/yazi/plugins/mpviewer.yazi/'
 
@@ -31,7 +33,8 @@ local function zoom(func,unit)
 
 local	function enter (func)
   local h = cx.active.current.hovered
-  ya.manager_emit(h and h.cha.is_dir and "enter" or "open", { hovered = true })
+  -- ya.emit(h and h.cha.is_dir and "enter" or "open", { hovered = true })
+  ya.emit("open", { hovered = true })
 
   local file  = mpserver..'mpv_util.sh '
   local cmd   = file..func
@@ -59,7 +62,7 @@ function M:entry(job)
 
 function M:peek(job)
 	local start = os.clock()
-	ya.sleep(math.max(0, rt.preview.image_delay / 1000 + start - os.clock()))
+	-- ya.sleep(math.max(0, rt.preview.image_delay / 1000 + start - os.clock()))
   -- print('----')
 
   local u = job.file.url
@@ -70,8 +73,8 @@ function M:peek(job)
   local paramt = ' "'..u..'" '
   local cmd    = script..paramt..rmverr
   local info = io.popen(cmd):read("*a")
-	local text = ui.Text.parse(info)
-	ya.preview_widgets(job, { text:area(job.area) })
+	local text = ui.Text(info)
+	ya.preview_widget(job, { text:area(job.area) })
 
   local script = " ~/.config/yazi/plugins/mpviewer.yazi/mpv_play.sh "
   local paramt = ' "'..u..'" '..a.x..' '..a.y..' '..a.w..' '..a.h..' '
@@ -81,6 +84,7 @@ function M:peek(job)
   -- os.execute()
   end
 
+function M:spot(job) require("file"):spot(job) end
 
 return M
 
