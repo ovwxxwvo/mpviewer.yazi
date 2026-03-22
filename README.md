@@ -3,9 +3,12 @@
 Preview media (image|audio|vidwo) file in specific env (`sway`+`tmux`) base on `mpv`.  
 It needs to be toggled manually, not start automatically.  
 The previewed media can be `seek bw|fw` & `zoom in|out` by setting the key.  
+**(Plugin contains shell scripts. Scripts have risks, use with caution.)**  
+
 
 预览多媒体文件基于`mpv`在特定环境(`sway`+`tmux`)。  
 需要手动开启不会自动启动。预览文件可以快进快退和放大缩小。  
+**(插件包含执行脚本，脚本有风险，使用需谨慎使用。)**  
 
 ----  
 
